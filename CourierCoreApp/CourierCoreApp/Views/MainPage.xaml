@@ -12,12 +12,12 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackLayout>
-            <StackLayout Grid.Row="2" BindingContext="{StaticResource viewModel}" HorizontalOptions="Center" Margin="5">
+            <StackLayout Grid.Row="1" BindingContext="{StaticResource viewModel}" HorizontalOptions="CenterAndExpand" Margin="5">
                 <Label Text="Укажите логин для авторизации в приложении"/>
                 <Entry Keyboard="Text"  Text="{Binding Login}"/>
                 <Button Text="Войти" Command="{Binding AuthCommand}"/>
             </StackLayout>
-            <StackLayout Grid.Row="3" BindingContext="{StaticResource viewModel}" HorizontalOptions="EndAndExpand" Margin="5">
+            <StackLayout Grid.Row="2" BindingContext="{StaticResource viewModel}" HorizontalOptions="EndAndExpand" Margin="5">
                 <Label Text="{Binding Message}"/>
             </StackLayout>
         </StackLayout>

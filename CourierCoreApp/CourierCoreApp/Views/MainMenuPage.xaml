@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewmodel="clr-namespace:CourierCoreApp.ViewModels"
+             x:Class="CourierCoreApp.Views.MainMenuPage">
+    <ContentPage.Resources>
+        <viewmodel:MainMenuViewModel x:Key="viewModel"/>
+    </ContentPage.Resources>
+    <Grid BindingContext="{StaticResource viewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackLayout Grid.Row="1" Margin="5" HorizontalOptions="CenterAndExpand">
+            <Button Text="Личный кабинет" Command="{Binding PersonalAreaEnterCommand}"/>
+            <Button Text="Заказы" Command="{Binding OrdersEnterCommand}"/>
+            <Label Text="{Binding UsrID}"/>
+        </StackLayout>
+        <StackLayout Grid.Row="2" Margin="5" HorizontalOptions="CenterAndExpand">
+            <Button Text="Выйти" Command="{Binding ExitCommand}"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>
