@@ -15,7 +15,9 @@ namespace CourierCoreApp.ViewModels {
         private RelayCommand _PersonalAreaEnterCommand;
         public RelayCommand PersonalAreaEnterCommand {
             get => _PersonalAreaEnterCommand ??= new RelayCommand(async obj => {
-                App.Current.MainPage = new NavigationPage(new PersonalPage(UsrID));
+                //App.Current.MainPage = new NavigationPage(new PersonalPage(UsrID));
+                PersonalAreaViewModel vm = new PersonalAreaViewModel(UsrID);
+                App.Current.MainPage = new PersonalPage(vm);
             });
         }
         private RelayCommand _OrdersEnterCommand;

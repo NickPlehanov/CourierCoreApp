@@ -11,9 +11,15 @@ using Xamarin.Forms.Xaml;
 namespace CourierCoreApp.Views {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainMenuPage : ContentPage {
-        public MainMenuPage(string _usrID) {
+        public MainMenuViewModel ViewModel { get; private set; }
+        public MainMenuPage() {
             InitializeComponent();
-            this.BindingContext = new MainMenuViewModel(_usrID);
+            //this.BindingContext = new MainMenuViewModel(_usrID);
+        }
+        public MainMenuPage(MainMenuViewModel vm) {
+            InitializeComponent();
+            ViewModel = vm;
+            this.BindingContext = ViewModel;
         }
     }
 }

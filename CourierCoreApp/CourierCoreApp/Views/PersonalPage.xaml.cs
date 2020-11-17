@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CourierCoreApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,14 @@ using Xamarin.Forms.Xaml;
 namespace CourierCoreApp.Views {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PersonalPage : ContentPage {
-        public PersonalPage(string usrID) {
+        public PersonalAreaViewModel ViewModel { get; private set; }
+        public PersonalPage() {
             InitializeComponent();
+        }
+        public PersonalPage(PersonalAreaViewModel vm) {
+            InitializeComponent();
+            ViewModel = vm;
+            this.BindingContext = vm;
         }
     }
 }

@@ -55,9 +55,10 @@ namespace CourierCoreApp.ViewModels {
 					List<TpUsers> users = JsonConvert.DeserializeObject<List<TpUsers>>(resp);
 					if(users.Any(x => x.UsrIsDisabled == false && x.UsrDelId == null)) {
 						if(users.Count(x => x.UsrIsDisabled == false && x.UsrDelId == null) == 1) {
-							App.Current.MainPage = new NavigationPage(new MainMenuPage(users.First(x => x.UsrIsDisabled == false && x.UsrDelId == null).UsrId.ToString()));
+							//App.Current.MainPage = new NavigationPage(new MainMenuPage(users.First(x => x.UsrIsDisabled == false && x.UsrDelId == null).UsrId.ToString()));
 							//await App.Current.MainPage.Navigation.PushModalAsync(new MainMenuPage(users.First(x => x.UsrIsDisabled == false && x.UsrDelId == null).UsrId.ToString()));
-							
+							MainMenuViewModel vm = new MainMenuViewModel(users.First(x => x.UsrIsDisabled == false && x.UsrDelId == null).UsrId.ToString());
+							App.Current.MainPage = new MainMenuPage(vm);
 						}
 						else
 							Message = "Неоднозначный логин пользователя. Вход запрещен";
