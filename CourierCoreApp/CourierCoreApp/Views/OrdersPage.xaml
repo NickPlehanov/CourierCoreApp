@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CourierCoreApp.Views.OrdersPage">
+    <ContentPage.Content>
+        <Grid>
+            <!--<Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>-->
+            <CollectionView Margin="5" 
+                                ItemsSource="{Binding Guests}" SelectionMode="Single" 
+                                SelectionChangedCommand="{Binding GuestInfoCommand, Mode=TwoWay}"
+                                SelectedItem="{Binding SelectedGuest}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Horizontal"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Expander>
+                            <Expander.Header>
+                                <Label Text="{Binding Path=GuestNumber}"/>
+                            </Expander.Header>
+                            <StackLayout>
+                                <Label Text="{Binding Path=TimePrinitya}"/>
+                                <Label Text="{Binding Path=TimeNaznachenia}"/>
+                                <CheckBox IsChecked="{Binding Path=PayType}" IsEnabled="False"/>
+                                <CheckBox IsChecked="{Binding Path=PayCheck}" IsEnabled="False"/>
+                                <Label Text="{Binding Path=Sdacha}"/>
+                                <Label Text="{Binding Path=TimeClose}"/>
+                                <Label Text="{Binding Path=Comment}"/>
+                                <Expander>
+                                    <Expander.Header>
+                                        <Label Text="{Binding ClientName}"/>
+                                    </Expander.Header>
+                                    <StackLayout>
+                                        <Label Text="{Binding Path=ClientPhone}"/>
+                                    </StackLayout>
+                                </Expander>
+                                <Expander>
+                                    <Expander.Header>
+                                        <Label Text="Спецификация заказа"/>
+                                    </Expander.Header>
+                                    <StackLayout>
+                                        <CollectionView ItemsSource="{Binding OrderItems}">
+                                            <CollectionView.ItemsLayout>
+                                                <GridItemsLayout Orientation="Horizontal"/>
+                                            </CollectionView.ItemsLayout>
+                                            <CollectionView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackLayout>
+                                                        <FlexLayout Margin="5">
+                                                            <Label Text="{Binding Path=OritName}"/>
+                                                            <Label Text="{Binding Path=OritCount}"/>
+                                                            <Label Text="{Binding Path=OritPrice}"/>
+                                                            <Label Text="{Binding Path=OritSum}"/>
+                                                            <Label Text="{Binding Path=OritComment}"/>
+                                                        </FlexLayout>
+                                                        <Label Text="{Binding Path=TotalSum}"/>
+                                                    </StackLayout>
+                                                </DataTemplate>
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+                                    </StackLayout>
+                                </Expander>
+                            </StackLayout>
+                        </Expander>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

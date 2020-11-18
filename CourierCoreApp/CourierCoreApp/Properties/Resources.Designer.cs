@@ -61,7 +61,7 @@ namespace CourierCoreApp.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на https://e7970ef952e5.ngrok.io.
+        ///   Ищет локализованную строку, похожую на https://c35a1af73d6e.ngrok.io.
         /// </summary>
         internal static string BaseAddress {
             get {
