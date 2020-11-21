@@ -14,6 +14,7 @@ namespace CourierCoreApp.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            global::Xamarin.Forms.Forms.SetFlags(new string[] { "Expander_Experimental" });
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 

@@ -1,74 +1,92 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:vm="clr-namespace:CourierCoreApp.ViewModels" 
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
              x:Class="CourierCoreApp.Views.OrdersPage">
+    <ContentPage.Resources>
+        <vm:OrdersViewModel x:Key="vm"/>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
-            <!--<Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="5*"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
+            <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>-->
-            <CollectionView Margin="5" 
+            <StackLayout Grid.Row="0">
+                <Button Text="Обновить данные" Command="{Binding RefreshCommand}"/>
+            </StackLayout>
+            <CollectionView Grid.Row="1" Margin="5" 
                                 ItemsSource="{Binding Guests}" SelectionMode="Single" 
                                 SelectionChangedCommand="{Binding GuestInfoCommand, Mode=TwoWay}"
-                                SelectedItem="{Binding SelectedGuest}">
+                                SelectedItem="{Binding SelectedGuest}" VerticalOptions="Center" HorizontalOptions="Center">
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Horizontal"/>
+                    <GridItemsLayout Orientation="Vertical"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Expander>
+                        <Expander Command="{Binding GuestInfoCommand}">
                             <Expander.Header>
-                                <Label Text="{Binding Path=GuestNumber}"/>
+                                <Label Text="{Binding Path=GestName}" BackgroundColor="Azure" 
+                                       HeightRequest="50" WidthRequest="50" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="5"/>
                             </Expander.Header>
-                            <StackLayout>
-                                <Label Text="{Binding Path=TimePrinitya}"/>
-                                <Label Text="{Binding Path=TimeNaznachenia}"/>
-                                <CheckBox IsChecked="{Binding Path=PayType}" IsEnabled="False"/>
-                                <CheckBox IsChecked="{Binding Path=PayCheck}" IsEnabled="False"/>
-                                <Label Text="{Binding Path=Sdacha}"/>
-                                <Label Text="{Binding Path=TimeClose}"/>
-                                <Label Text="{Binding Path=Comment}"/>
-                                <Expander>
-                                    <Expander.Header>
-                                        <Label Text="{Binding ClientName}"/>
-                                    </Expander.Header>
-                                    <StackLayout>
-                                        <Label Text="{Binding Path=ClientPhone}"/>
-                                    </StackLayout>
-                                </Expander>
-                                <Expander>
-                                    <Expander.Header>
-                                        <Label Text="Спецификация заказа"/>
-                                    </Expander.Header>
-                                    <StackLayout>
-                                        <CollectionView ItemsSource="{Binding OrderItems}">
-                                            <CollectionView.ItemsLayout>
-                                                <GridItemsLayout Orientation="Horizontal"/>
-                                            </CollectionView.ItemsLayout>
-                                            <CollectionView.ItemTemplate>
-                                                <DataTemplate>
-                                                    <StackLayout>
-                                                        <FlexLayout Margin="5">
-                                                            <Label Text="{Binding Path=OritName}"/>
-                                                            <Label Text="{Binding Path=OritCount}"/>
-                                                            <Label Text="{Binding Path=OritPrice}"/>
-                                                            <Label Text="{Binding Path=OritSum}"/>
-                                                            <Label Text="{Binding Path=OritComment}"/>
-                                                        </FlexLayout>
-                                                        <Label Text="{Binding Path=TotalSum}"/>
-                                                    </StackLayout>
-                                                </DataTemplate>
-                                            </CollectionView.ItemTemplate>
-                                        </CollectionView>
-                                    </StackLayout>
-                                </Expander>
-                            </StackLayout>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" Text="Дата открытия заказа: " FontAttributes="Bold"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Path=GestDateOpen}"/>
+
+                                <Label Grid.Row="1" Grid.Column="0" Text="Время назначения на заказ: " FontAttributes="Bold"/>
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Path=TimeNaznachenia}"/>
+
+                                <Label Grid.Row="2" Grid.Column="0" Text="Тип оплаты: " FontAttributes="Bold"/>
+                                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Path=PayType}"/>
+
+                                <Label Grid.Row="3" Grid.Column="0" Text="Оплачено: " FontAttributes="Bold"/>
+                                <CheckBox Grid.Row="3" Grid.Column="1" IsChecked="{Binding Path=PayCheck}" IsEnabled="False"/>
+
+                                <Label Grid.Row="4" Grid.Column="0" Text="Сдача: " FontAttributes="Bold"/>
+                                <Label Grid.Row="4" Grid.Column="1" Text="{Binding Path=Sdacha}"/>
+
+                                <Label Grid.Row="5" Grid.Column="0" Text="Дата закрытия заказа: " FontAttributes="Bold"/>
+                                <Label Grid.Row="5" Grid.Column="1" Text="{Binding Path=GestDateClose}"/>
+
+                                <Label Grid.Row="6" Grid.Column="0" Text="Комментарий к заказу: " FontAttributes="Bold"/>
+                                <Label Grid.Row="6" Grid.Column="1" Text="{Binding Path=GestComment}"/>
+
+                                <Label Grid.Row="7" Grid.Column="0" Text="{Binding Path=ClntName}"/>
+                                <Label Grid.Row="7" Grid.Column="1" Text="{Binding Path=ClntPhones}"/>
+                                <dg:DataGrid Grid.Row="8" Grid.ColumnSpan="2" BorderThickness="1" BorderColor="#620000" 
+                                                    ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type vm:OrdersViewModel}}, Path=OrderItems}">
+                                    <dg:DataGrid.Columns>
+                                        <dg:DataGridColumn Width="3*" Title="Наименование" PropertyName="MitmName"/>
+                                        <dg:DataGridColumn Width="*" Title="Кол-во" PropertyName="OritCount"/>
+                                        <dg:DataGridColumn Width="*" Title="Цена" PropertyName="OritPrice"/>
+                                    </dg:DataGrid.Columns>
+                                </dg:DataGrid>
+
+                                <Button Grid.Row="9" Grid.ColumnSpan="2" Text="Закрыть заказ" 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:OrdersViewModel}}, Path=GuestCloseCommand}"
+                                        CommandParameter="{Binding Path=GestID}"/>
+                            </Grid>
                         </Expander>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

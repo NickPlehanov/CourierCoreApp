@@ -23,7 +23,8 @@ namespace CourierCoreApp.ViewModels {
         private RelayCommand _OrdersEnterCommand;
         public RelayCommand OrdersEnterCommand {
             get => _OrdersEnterCommand ??= new RelayCommand(async obj => {
-                //App.Current.MainPage = new NavigationPage(new OrdersPage());
+                OrdersViewModel vm = new OrdersViewModel(UsrID);
+                App.Current.MainPage = new NavigationPage(new OrdersPage(vm));
             });
         }
         private RelayCommand _ExitCommand;
