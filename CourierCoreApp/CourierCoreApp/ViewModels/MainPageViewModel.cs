@@ -12,6 +12,10 @@ using Xamarin.Forms;
 
 namespace CourierCoreApp.ViewModels {
     public class MainPageViewModel : BaseViewModel {
+        public MainPageViewModel() {
+			Opacity = 1;
+			IndicatorVisible = false;
+		}
         private string _Message;
         public string Message {
             get => _Message;
@@ -37,16 +41,29 @@ namespace CourierCoreApp.ViewModels {
 		//		OnPropertyChanged(nameof(UsrID));
 		//	}
 		//}
+		private bool _IndicatorVisible;
+		public bool IndicatorVisible {
+			get => _IndicatorVisible;
+            set {
+				_IndicatorVisible = value;
+				OnPropertyChanged(nameof(IndicatorVisible));
+            }
+        }
+		private double _Opacity;
+		public double Opacity {
+			get => _Opacity;
+            set {
+				_Opacity = value;
+				OnPropertyChanged(nameof(Opacity));
+            }
+        }
 
 		private RelayCommand _AuthCommand;
         public RelayCommand AuthCommand {
 			get => _AuthCommand ??= new RelayCommand(async obj => {
-				using HttpClient client = new HttpClient();
-				//string baseAddress = "https://d9632ebceae8.ngrok.io";
-				//string Phone = null;
-				//if(PhoneNumber.Length == 11) {
-				//	Phone = PhoneNumber.Substring(1,PhoneNumber.Length - 1);
-				//}
+				Opacity = 0.1;
+				IndicatorVisible = true;
+				using HttpClient client = new HttpClient();				
 				HttpResponseMessage response = await client.GetAsync(Resources.BaseAddress + "/api/TpUsers/login?login=" + Login);
 				var resp = response.Content.ReadAsStringAsync().Result;
 				Message = resp;
@@ -59,6 +76,8 @@ namespace CourierCoreApp.ViewModels {
 							//await App.Current.MainPage.Navigation.PushModalAsync(new MainMenuPage(users.First(x => x.UsrIsDisabled == false && x.UsrDelId == null).UsrId.ToString()));
 							MainMenuViewModel vm = new MainMenuViewModel(users.First(x => x.UsrIsDisabled == false && x.UsrDelId == null).UsrId.ToString());
 							App.Current.MainPage = new MainMenuPage(vm);
+							Opacity = 1;
+							IndicatorVisible = false;
 						}
 						else
 							Message = "Неоднозначный логин пользователя. Вход запрещен";
@@ -66,6 +85,8 @@ namespace CourierCoreApp.ViewModels {
 					else
 						Message = "Пользователь с указанным логином отключен или удален";
                 }
+				Opacity = 1;
+				IndicatorVisible = false;
 			});
 		}
     }

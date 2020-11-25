@@ -8,11 +8,11 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackLayout>
-            <StackLayout Grid.Row="1" BindingContext="{StaticResource viewModel}" HorizontalOptions="CenterAndExpand" Margin="5">
+        <StackLayout BindingContext="{StaticResource viewModel}" Opacity="{Binding Opacity}">
+            <StackLayout Grid.Row="1"  HorizontalOptions="CenterAndExpand" Margin="5">
                 <Label Text="Укажите логин для авторизации в приложении"/>
                 <Entry Keyboard="Text"  Text="{Binding Login}"/>
                 <Button Text="Войти" Command="{Binding AuthCommand}"/>
@@ -20,6 +20,10 @@
             <StackLayout Grid.Row="2" BindingContext="{StaticResource viewModel}" HorizontalOptions="EndAndExpand" Margin="5">
                 <Label Text="{Binding Message}"/>
             </StackLayout>
+        </StackLayout>
+        <StackLayout BindingContext="{StaticResource viewModel}" IsVisible="{Binding IndicatorVisible}" Grid.Row="2" Padding="30" HorizontalOptions="Center" VerticalOptions="Center">
+            <ActivityIndicator IsRunning="True" Color="Red" HeightRequest="50" WidthRequest="50"  />
+            <Label FontAttributes="Bold" Text="Подождите, идет загрузка..." TextColor="White" />
         </StackLayout>
     </Grid>
 

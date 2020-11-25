@@ -11,5 +11,9 @@ namespace CourierCoreApp.Models {
         public Guid? UslpUsrIdEnd { get; set; }
         public DateTime UslpDateBegin { get; set; }
         public DateTime? UslpDateEnd { get; set; }
+
+        public int CountOrders { get; set; }
+        public string CountHours { get; set; }
+        public int Sum { get; set; }
     }
 }

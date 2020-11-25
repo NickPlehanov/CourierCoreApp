@@ -2,6 +2,7 @@
 using CourierCoreApp.Helpers;
 using CourierCoreApp.Models;
 using CourierCoreApp.Properties;
+using CourierCoreApp.Views;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace CourierCoreApp.ViewModels {
     public class OrdersViewModel : BaseViewModel {
         public OrdersViewModel(string usr_ID) {
             UsrID = usr_ID;
+            IndicatorVisible = false;
+            Opacity = 1;
         }
         public OrdersViewModel() {
 
@@ -46,6 +49,14 @@ namespace CourierCoreApp.ViewModels {
             set {
                 _Guests = value;
                 OnPropertyChanged(nameof(Guests));
+            }
+        }
+        private decimal _sum;
+        public decimal Sum {
+            get => _sum;
+            set {
+                _sum = value;
+                OnPropertyChanged(nameof(Sum));
             }
         }
 
@@ -105,6 +116,29 @@ namespace CourierCoreApp.ViewModels {
                 //}
             });
         }
+        private RelayCommand _BackPressedCommand;
+        public RelayCommand BackPressedCommand {
+            get => _BackPressedCommand ??= new RelayCommand(async obj => {
+                MainMenuViewModel vm = new MainMenuViewModel(UsrID);
+                App.Current.MainPage = new MainMenuPage(vm);
+            });
+        }
+        private bool _IndicatorVisible;
+        public bool IndicatorVisible {
+            get => _IndicatorVisible;
+            set {
+                _IndicatorVisible = value;
+                OnPropertyChanged(nameof(IndicatorVisible));
+            }
+        }
+        private double _Opacity;
+        public double Opacity {
+            get => _Opacity;
+            set {
+                _Opacity = value;
+                OnPropertyChanged(nameof(Opacity));
+            }
+        }
         private RelayCommand _GuestCloseCommand;
         public RelayCommand GuestCloseCommand {
             get => _GuestCloseCommand ??= new RelayCommand(async obj => {
@@ -137,6 +171,8 @@ namespace CourierCoreApp.ViewModels {
         private RelayCommand _RefreshCommand;
         public RelayCommand RefreshCommand {
             get => _RefreshCommand ??= new RelayCommand(async obj => {
+                IndicatorVisible = true;
+                Opacity = 0.1;
                 using HttpClient client = new HttpClient();
                 HttpResponseMessage response = await client.GetAsync(Resources.BaseAddress + "/api/TpGuests/gestByUsrID?courierID=" + UsrID + "&date=" + DateTime.Now);
                 var resp = response.Content.ReadAsStringAsync().Result;
@@ -173,8 +209,10 @@ namespace CourierCoreApp.ViewModels {
                         /*await Application.Current.MainPage.DisplayAlert("Ошибка","Не удалось получить корректные данные, проверьте подключение к интернету, в случае повторной ошибки, обратитесь к администратору","ОК");*/
                     }
                     OrderItems.Clear();
+                    Sum = 0;
                     foreach(Orders_OrderItem_MenuItems _item in orits) {
                         OrderItems.Add(_item);
+                        Sum += _item.OritCount * _item.OritPrice;
                     }
 
                     XmlDocument doc = new XmlDocument();
@@ -210,6 +248,8 @@ namespace CourierCoreApp.ViewModels {
                     //ordrs.Clear();
                     //Guests.Add(item);
                 }
+                IndicatorVisible = false;
+                Opacity = 1;
             });
         }
     }

@@ -17,10 +17,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>-->
-            <StackLayout Grid.Row="0">
+            <StackLayout Grid.Row="0" Opacity="{Binding Opacity}">
                 <Button Text="Обновить данные" Command="{Binding RefreshCommand}"/>
             </StackLayout>
-            <CollectionView Grid.Row="1" Margin="5" 
+            <CollectionView Opacity="{Binding Opacity}" Grid.Row="1" Margin="5" 
                                 ItemsSource="{Binding Guests}" SelectionMode="Single" 
                                 SelectionChangedCommand="{Binding GuestInfoCommand, Mode=TwoWay}"
                                 SelectedItem="{Binding SelectedGuest}" VerticalOptions="Center" HorizontalOptions="Center">
@@ -36,6 +36,8 @@
                             </Expander.Header>
                             <Grid>
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
@@ -73,9 +75,13 @@
                                 <Label Grid.Row="6" Grid.Column="1" Text="{Binding Path=GestComment}"/>
 
                                 <Label Grid.Row="7" Grid.Column="0" Text="{Binding Path=ClntName}"/>
-                                <Label Grid.Row="7" Grid.Column="1" Text="{Binding Path=ClntPhones}"/>
-                                <dg:DataGrid Grid.Row="8" Grid.ColumnSpan="2" BorderThickness="1" BorderColor="#620000" 
-                                                    ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type vm:OrdersViewModel}}, Path=OrderItems}">
+                                <Label Grid.Row="7" Grid.Column="1" Text="{Binding Path=ClntPhones}" TextDecorations="Underline" TextColor="Blue"/>
+
+                                <Label Grid.Row="8" Grid.Column="0" Text="Адрес доставки"/>
+                                <Label Grid.Row="8" Grid.Column="1" Text="{Binding Path=ClntAddress}"/>
+                                
+                                <dg:DataGrid Grid.Row="9" Grid.ColumnSpan="2" BorderThickness="1" BorderColor="#620000" 
+                                 ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type vm:OrdersViewModel}}, Path=OrderItems}">
                                     <dg:DataGrid.Columns>
                                         <dg:DataGridColumn Width="3*" Title="Наименование" PropertyName="MitmName"/>
                                         <dg:DataGridColumn Width="*" Title="Кол-во" PropertyName="OritCount"/>
@@ -83,7 +89,10 @@
                                     </dg:DataGrid.Columns>
                                 </dg:DataGrid>
 
-                                <Button Grid.Row="9" Grid.ColumnSpan="2" Text="Закрыть заказ" 
+                                <Label Grid.Row="10" Grid.Column="0" Text="Сумма: "/>
+                                <Label Grid.Row="10" Grid.Column="1" HorizontalTextAlignment="End" Text="{Binding Source={RelativeSource AncestorType={x:Type vm:OrdersViewModel}}, Path=Sum}"/>
+
+                                <Button Grid.Row="11" Grid.ColumnSpan="2" Text="Закрыть заказ" 
                                         Command="{Binding Source={RelativeSource AncestorType={x:Type vm:OrdersViewModel}}, Path=GuestCloseCommand}"
                                         CommandParameter="{Binding Path=GestID}"/>
                             </Grid>
@@ -91,6 +100,10 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <StackLayout IsVisible="{Binding IndicatorVisible}" Grid.Row="1" Padding="30" HorizontalOptions="Center" VerticalOptions="Center">
+                <ActivityIndicator IsRunning="True" Color="Red" HeightRequest="50" WidthRequest="50"  />
+                <Label FontAttributes="Bold" Text="Подождите, идет загрузка..." TextColor="White" />
+            </StackLayout>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

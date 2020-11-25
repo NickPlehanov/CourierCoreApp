@@ -21,5 +21,15 @@ namespace CourierCoreApp.Views {
             ViewModel = vm;
             this.BindingContext = ViewModel;
         }
+        protected override bool OnBackButtonPressed() {
+            //var vm = (ViewModel)BindingContext;
+            if(ViewModel.ExitCommand.CanExecute(null))  // You can add parameters if any
+              {
+                ViewModel.ExitCommand.Execute(null); // You can add parameters if any
+                return true;
+            }
+            else
+                return false;
+        }
     }
 }

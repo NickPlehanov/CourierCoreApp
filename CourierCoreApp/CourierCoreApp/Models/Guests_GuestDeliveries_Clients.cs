@@ -14,6 +14,7 @@ namespace CourierCoreApp.Models {
         public Guid? ClntID { get; set; }
         public string ClntName { get; set; }
         public string ClntPhones { get; set; }
+        public string ClntAddress { get; set; }
         public string PayType { get; set; }
         public decimal PaySum { get; set; }
         //private bool _PayChecks { get; set; }

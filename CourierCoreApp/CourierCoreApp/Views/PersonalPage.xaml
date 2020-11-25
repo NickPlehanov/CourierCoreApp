@@ -1,19 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodel="clr-namespace:CourierCoreApp.ViewModels"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewmodel="clr-namespace:CourierCoreApp.ViewModels" 
+             xmlns:sys="clr-namespace:System;assembly=netstandard" 
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
              x:Class="CourierCoreApp.Views.PersonalPage">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
+            <!--<RowDefinition Height="*"/>-->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackLayout Grid.Row="1" Margin="5">
+        <StackLayout Grid.Row="1" Margin="5" Opacity="{Binding Opacity}">
             <Label Text="{Binding ShiftInfo}"/>
+            <dg:DataGrid BorderColor="#620000" ItemsSource="{Binding ShiftsInfo}">
+                <dg:DataGrid.Columns>
+                    <dg:DataGridColumn Width="*" Title="Начало" PropertyName="UslpDateBegin"/>
+                    <dg:DataGridColumn Width="*" Title="Конец" PropertyName="UslpDateEnd"/>
+                    <dg:DataGridColumn Width="*" Title="Часов" PropertyName="CountHours"/>
+                    <dg:DataGridColumn Width="*" Title="Заказов" PropertyName="new_obj"/>
+                    <dg:DataGridColumn Width="*" Title="Сумма" PropertyName="new_obj"/>
+                </dg:DataGrid.Columns>
+            </dg:DataGrid>
         </StackLayout>
-        <StackLayout Grid.Row="2" Margin="5">
+        <StackLayout Grid.Row="2" Margin="5" Opacity="{Binding Opacity}">
+            <Label Text="Дата начала"/>
+            <DatePicker Date="{Binding Start}">
+                <DatePicker.MinimumDate>
+                    <sys:DateTime x:FactoryMethod="Parse">
+                        <x:Arguments>
+                            <x:String>Jan 1 2010</x:String>
+                        </x:Arguments>
+                    </sys:DateTime>
+                </DatePicker.MinimumDate>
+                <DatePicker.MaximumDate>
+                    <sys:DateTime x:FactoryMethod="Parse">
+                        <x:Arguments>
+                            <x:String>Dec 31 2050</x:String>
+                        </x:Arguments>
+                    </sys:DateTime>
+                </DatePicker.MaximumDate>
+            </DatePicker>
+            <Label Text="Дата окончания"/>
+            <DatePicker Date="{Binding End}">
+                <DatePicker.MinimumDate>
+                    <sys:DateTime x:FactoryMethod="Parse">
+                        <x:Arguments>
+                            <x:String>Jan 1 2010</x:String>
+                        </x:Arguments>
+                    </sys:DateTime>
+                </DatePicker.MinimumDate>
+                <DatePicker.MaximumDate>
+                    <sys:DateTime x:FactoryMethod="Parse">
+                        <x:Arguments>
+                            <x:String>Dec 31 2050</x:String>
+                        </x:Arguments>
+                    </sys:DateTime>
+                </DatePicker.MaximumDate>
+            </DatePicker>
+            <Button Text="Получить данные" Command="{Binding GetShiftInfoCommand}"/>
             <Button Text="Открыть смену" Command="{Binding OpenShiftCommand}"/>
             <Button Text="Закрыть смену" Command="{Binding CloseShiftCommand}"/>
+        </StackLayout>
+        <StackLayout IsVisible="{Binding IndicatorVisible}" Grid.Row="2" Padding="30" HorizontalOptions="Center" VerticalOptions="Center">
+            <ActivityIndicator IsRunning="True" Color="Red" HeightRequest="50" WidthRequest="50"  />
+            <Label FontAttributes="Bold" Text="Подождите, идет загрузка..." TextColor="White" />
         </StackLayout>
     </Grid>
 </ContentPage>
